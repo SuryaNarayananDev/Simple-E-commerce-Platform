@@ -1,0 +1,30 @@
+<div class="container">
+     <div class="container">
+        
+        <table class="table mt-5">
+            <thead>
+                <tr style="text-align: center;">
+                    <th scope="col">Name</th>
+                    <th scope="col">Address</th>
+                    <th scope="col">Pin Code</th>
+                    <th scope="col">Mobile no</th>
+                    <th  scope="col">payment</th>
+                    <th scope="col">Price</th>
+                    <th scope="col">Products</th>
+                </tr>
+            </thead>
+            <tbody>
+                {{#each orders}}
+                <tr style="text-align: center;">
+                    <td><p class="name">{{this.deliveryDetails.name}}</p></td>
+                     <td><p class="name">{{this.deliveryDetails.address}}</p></td>
+                      <td><p class="name">{{this.deliveryDetails.pin}}</p></td>
+                       <td><p class="name">{{this.deliveryDetails.mobile}}</p></td>
+                        <td><p class="name">{{this.paymentMethod}}</p></td>
+                         <td><p class="name">{{this.totalAmount}}</p></td>
+                          <td><a class="btn btn-info" href="/view-order-products/{{this._id}}">View Products</a></td>
+                {{/each}}
+            </tbody>
+        </table>
+    </div>
+</div>

@@ -1,0 +1,34 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<section>
+    <div class="container">
+        <div class="row mt-4">
+            <a href="/admin/add-product" class="btn btn-success ml-auto">ADD PRODUCTS</a>
+        </div>
+        <table class="table mt-5">
+            <thead>
+                <tr>
+                    <th scope="col">No</th>
+                    <th scope="col">Image</th>
+                    <th scope="col">Title</th>
+                    <th scope="col">Category</th>
+                    <th scope="col">Price</th>
+                </tr>
+            </thead>
+            <tbody>
+                {{#each products}}
+                <tr>
+                    <th scope="row">1</th>
+                    <th><img style="height: 45px; width: 40px;" src="/product-images/{{this._id}}.jpg" alt=""></th>
+                    <td>{{this.name}}</td>
+                    <td>{{this.category}}</td>
+                    <td>{{this.price}}</td>
+                    <td>
+                    <a href="admin/edit-product/{{this._id}}"><button class="btn btn-success btn-xs"><i class="fa fa-edit"></i></button></a>
+                    <a href="/admin/delete-product/{{this._id}}"><button onclick="return confirm('Product {{this.name}} want to Delete ?')" class="btn btn-danger btn-xs"><i class="fa fa-trash"></i></button></a>
+                    </td>
+                </tr>
+                {{/each}}
+            </tbody>
+        </table>
+    </div>
+</section>

@@ -1,0 +1,70 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<title>My Cart</title>
+<section>
+    <div class="container">
+        
+        <table class="table mt-5">
+            <thead>
+                <tr style="text-align: center;">
+                    <th scope="col">No</th>
+                    <th scope="col">Image</th>
+                    <th scope="col">Title</th>
+                    <th scope="col">Category</th>
+                    <th  scope="col">Quantity</th>
+                    <th scope="col">Price</th>
+                    <th scope="col"></th>
+                </tr>
+            </thead>
+            <tbody>
+                {{#each products}}
+                 
+                <tr style="text-align: center;">
+                    <td scope="row">1</td>
+                    <td><img style="height: 45px; width: 40px;" src="/product-images/{{this.product._id}}.jpg" alt=""></td>
+                    <td><p class="para-title">{{this.product.name}}</p></td>
+                    <td><p class="para-category">{{this.product.category}}</p></td>
+                      <td>
+                        <div class="counter">
+                            <button class="btn btn-info" class="qty-btn" onclick="changeQuantity('{{this._id}}','{{this.product._id}}','{{../user}}',-1)">-</button>
+                            <span style="width: 30px;" id="{{this.product._id}}">{{this.quantity}}</span>
+                            <button class="btn btn-info"  class="qty-btn" onclick="changeQuantity('{{this._id}}','{{this.product._id}}','{{../user}}',1)">+</button>
+                        </div>
+                    </td>
+                    <td><p style="color: green;font-size: 20px;font-family: 'Times New Roman', Times, serif;" class="para-price">
+                        Rs {{this.product.price}}</p></td>
+                    <td><a href=""><button onclick="/trash" class="btn btn-danger btn-xs"><i class="fa fa-trash"></i></button></a></td>
+                </tr>
+               {{/each}}
+            </tbody>
+        </table>
+    </div>
+    <hr>
+    <div class="container pr-5">
+    <div class="float-right mr-5">
+        <h2 style="font-size: 30px;">Total : <i style="color: green;" class="fa fa-inr"></i><span style="color: green;" id="total"> {{totalvalue}}</span></h2>
+        <a href="/place-order"><button id="place-btn"  class="btn btn-success btn-lg">Place Order <i style="font-size: 20px;" class="fa fa-dropbox"></i></button></a>
+    </div> 
+    </div>
+    </section>
+<style>
+    .counter {
+    width: 150px;
+    margin: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+}
+#Cart-Qty{
+    width: 30px;
+    margin-top: 10px;
+}
+.qty-btn{
+    font-size: 10px;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    font-weight: 200;
+}
+#place-btn{
+    width: 200px;
+}
+</style>

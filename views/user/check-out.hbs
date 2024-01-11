@@ -1,0 +1,160 @@
+<body>
+    <div class="container">
+        <p class="head">Delivery Form</p>
+        <hr>  
+        <form id="checkout-form" method="post" class="was-validated">
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label for="uname">Name</label>
+                        <input  type="text" class="form-control" id="uname" placeholder="Enter username" name="name" required>
+                        <div class="valid-feedback">Valid.</div>
+                        <div class="invalid-feedback">Please fill out this field.</div>
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="inputState">Payment</label>
+                    <select id="inputState" name="method" class="form-control">
+                        <option value="ONLINE" selected>Online Payment</option>
+                            <option value="COD">Cash on Delivery</option>
+                    </select>
+                        <div class="valid-feedback">Valid.</div>
+                        <div class="invalid-feedback">Please fill out this field.</div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="textarea-pop">Delivery Address</label>
+                <textarea class="form-control" id="textarea-pop" name="address" placeholder="Enter Address." required></textarea>
+                    <div class="valid-feedback">Valid.</div>
+                        <div class="invalid-feedback">Please fill out this field.</div>
+            </div>
+
+            <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label for="inputCity">City</label>
+                            <input type="text" name="city" class="form-control" id="inputCity" required>
+                            <div class="valid-feedback">Valid.</div>
+                        <div class="invalid-feedback">Please fill out this field.</div>
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label for="inputState">State</label>
+                            <select id="inputState" name="state" class="form-control" required>
+                                <option value="kerala">Karnataka</option>
+                                <option value="kerala">Kerala</option>
+                                <option value="kerala">Tamilnadu</option>
+                            </select>
+                            <div class="valid-feedback">Valid.</div>
+                        <div class="invalid-feedback">Please fill out this field.</div>
+                    </div>
+                    <div class="form-group col-md-2">
+                        <label for="inputpin">Pin-Code</label>
+                            <input type="tel" name="pincode" class="form-control" id="inputpin" required>
+                            <div class="valid-feedback">Valid.</div>
+                        <div class="invalid-feedback">Please fill out this field.</div>
+                    </div>
+                    <input type="text" value="{{user._id}}" name="userid" hidden>
+                    <div class="form-group col-md-6">
+                    <label for="mobno">Mobile number</label>
+                        <input  type="text" class="form-control" id="mobno" placeholder="Enter Mobile Number" name="mobile" required>
+                        <div class="valid-feedback">Valid.</div>
+                        <div class="invalid-feedback">Please fill out this field.</div>
+                </div>
+            </div>
+                <!--============================================================-->
+                
+               <button class="btn btn-success btn-lg  float-right" type="submit">Checkout</button>
+             
+        </form>
+    </div>
+     </body>
+     </html>
+     
+     <script>
+
+        
+  $("#checkout-form").submit((e)=>{
+    e.preventDefault()
+    $.ajax({
+        url:'/place-order',
+        method:'post', 
+        data:$('#checkout-form').serialize(),
+        success:(response)=>{
+            if(response.codSuccess)
+            {
+                console.log("cash on delivery order conmirmed")
+                location.href='/success-order'
+            }
+            else
+            {
+                console.log("online in reasponce")
+                razorpayPayment(response)
+            }
+        }
+    })
+})
+
+function razorpayPayment(order)
+{
+    var options = {
+    "key": "rzp_test_YihSnR3mxDBlTt", // Enter the Key ID generated from the Dashboard
+    "amount": order.amount, // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
+    "currency": "INR",
+    "name": "Acme Corp",
+    "description": "Test Transaction",
+    "image": "https://example.com/your_logo",
+    "order_id":order.id, //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
+    "handler": function (response){
+        verifyPayment(response,order)
+    },
+    "prefill": {
+        "name": "Gaurav Kumar",
+        "email": "gaurav.kumar@example.com",
+        "contact": "9000090000"
+    },
+    "notes": {
+        "address": "Razorpay Corporate Office"
+    },
+    "theme": {
+        "color": "#3399cc"
+    }
+};
+var rzp1 = new Razorpay(options);
+ rzp1.open();
+}
+
+function verifyPayment(payment,order)
+{
+    $.ajax({
+        url:'/verify-payment',
+        data:{
+            payment,
+            order
+        },
+        method:'post',
+        success:(response)=>{
+            if(response.status==true)
+            {
+                console.log("payment successfull in client side")
+                location.href='/success-order'
+            }else{
+                alert('Invalid Payment')
+            }
+        }
+    })
+}
+</script>
+
+<style>
+    #textarea-pop{
+        width: 100%;
+        height: 100px;
+    }
+    .head{
+      font-size: 60px;
+      font-family: 'Times New Roman', Times, serif;
+      color: rgba(9, 9, 9, 0.781);
+    }
+      .para-total{
+        font-size: 30px;
+        font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    }
+
+</style>

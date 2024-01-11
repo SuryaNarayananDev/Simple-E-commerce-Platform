@@ -1,0 +1,34 @@
+{
+  "name": "e-commerce",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "start": "node ./bin/www"
+  },
+  "dependencies": {
+    "@handlebars/allow-prototype-access": "^1.0.5",
+    "bcrypt": "^5.1.1",
+    "cookie-parser": "~1.4.4",
+    "crypto": "^1.0.1",
+    "debug": "~2.6.9",
+    "express": "^4.18.2",
+    "express-fileupload": "^1.4.3",
+    "express-handlebars": "^7.1.2",
+    "express-session": "^1.17.3",
+    "hbs": "^4.2.0",
+    "http-errors": "~1.6.3",
+    "mongodb": "^6.3.0",
+    "mongoose": "^8.0.2",
+    "morgan": "~1.9.1",
+    "nodemon": "^3.0.2",
+    "promise": "^8.3.0",
+    "razorpay": "^2.9.2"
+  },
+  "main": "app.js",
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "devDependencies": {
+    "handlebars": "^4.5.0"
+  }
+}
